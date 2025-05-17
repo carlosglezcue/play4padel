@@ -90,27 +90,16 @@ struct HomeView: View {
             }
             .scrollBounceBehavior(.basedOnSize)
             .fullScreenCover(isPresented: $viewModel.registerMatch) {
-                RegisterMatchView(
-                    userFirstSet: $viewModel.userFirstSet,
-                    userSecondSet: $viewModel.userSecondSet,
-                    userThirdSet: $viewModel.userThirdSet,
-                    rivalFirstSet: $viewModel.rivalFirstSet,
-                    rivalSecondSet: $viewModel.rivalSecondSet,
-                    rivalThirdSet: $viewModel.rivalThirdSet,
-                    dateInfo: $viewModel.dateInfo,
-                    courtTypeSelected: $viewModel.courtTypeSelected,
-                    positionSelected: $viewModel.positionSelected,
-                    saveAction: { viewModel.saveMatchAction(context) }
-                )
-                .alert( "Error saving match",
-                        isPresented: $viewModel.errorToSave,
-                        actions: {
-                    Button("Ok", role: .none) { }
-                },
-                        message: {
-                    Text("Review the data you entered and try again.")
-                }
-                )
+                RegisterMatchView(viewModel: $viewModel)
+                    .alert( "Error saving match",
+                            isPresented: $viewModel.errorToSave,
+                            actions: {
+                        Button("Ok", role: .none) { }
+                    },
+                            message: {
+                        Text("Review the data you entered and try again.")
+                    }
+                    )
             }
         }
     }
