@@ -14,31 +14,6 @@ struct CourtDataView: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .lastTextBaseline) {                
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.backward.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 20)
-                        .foregroundStyle(.black)
-                        .shadow(color: .gray.opacity(0.5), radius: 5, y: 5)
-                }
-                
-                Spacer()
-                
-                Text("Court Details")
-                    .font(.title2)
-                    .bold()
-                    .foregroundStyle(.onlyBlack)
-                    .padding(.top)
-                
-                Spacer()
-            }
-            .padding([.bottom, .horizontal])
-            .background(.principal)
-            
             PadelCourt2DView()
         }
         .navigationTitle("Court Details")

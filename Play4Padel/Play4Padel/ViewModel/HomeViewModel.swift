@@ -48,6 +48,7 @@ final class HomeViewModel {
     private func saveMatchData(_ context: ModelContext) {
         let newMatchData = MatchData(
             id: UUID(),
+            date: dateInfo,
             firstUserSet: Int(userFirstSet),
             secondUserSet: Int(userSecondSet),
             thirdUserSet: Int(userThirdSet),
@@ -58,7 +59,7 @@ final class HomeViewModel {
             totalRivalGames: getRivalTotalGamesInMatch(),
             isVictory: getVictory(),
             position: positionSelected.toData(),
-            courtType: courtTypeSelected.toData()
+            courtType: courtTypeSelected.toData(),
         )
         
         context.insert(newMatchData)
@@ -87,6 +88,7 @@ final class HomeViewModel {
         
         if firsSetCorrect && secondSetCorrect && thirdSetCorrect && lastSetCorrect {
             saveMatchData(context)
+            restarMatchValue()
         } else {
             errorToSave = true
         }
