@@ -281,9 +281,11 @@ final class RegisterMatchViewModel {
     
     func cancelFinishGameAction() {
         isMatchFinished = false
+        healthKitManager.resumeWorkout()
     }
     
     func saveGameAction(_ context: ModelContext) {
+        isMatchFinished = false
         if firstSetPlayer != 0 || firstSetRival != 0 {
             Task {
                 await saveGameData(context)
