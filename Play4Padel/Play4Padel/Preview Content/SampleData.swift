@@ -63,9 +63,43 @@ struct SampleData: PreviewModifier {
             calories: 900,
             totalMatchTime: 4500.0
         )
+        
+        let fourthMatch = MatchData(
+            id: UUID(),
+            date: Calendar.current.date(byAdding: .month, value: -1, to: .now),
+            firstUserSet: 6,
+            secondUserSet: 6,
+            totalUserGames: 12,
+            firstRivalSet: 2,
+            secondRivalSet: 3,
+            totalRivalGames: 5,
+            isVictory: true,
+            position: .drive,
+            courtType: .outdoor,
+            calories: 900,
+            totalMatchTime: 4500.0
+        )
+        
+        let fifthMatch = MatchData(
+            id: UUID(),
+            date: Calendar.current.date(byAdding: .month, value: -1, to: .now),
+            firstUserSet: 6,
+            secondUserSet: 6,
+            totalUserGames: 12,
+            firstRivalSet: 2,
+            secondRivalSet: 3,
+            totalRivalGames: 5,
+            isVictory: true,
+            position: .drive,
+            courtType: .outdoor,
+            calories: 900,
+            totalMatchTime: 4500.0
+        )
         container.mainContext.insert(firstMatch)
         container.mainContext.insert(secondMatch)
         container.mainContext.insert(thirdMatch)
+        container.mainContext.insert(fourthMatch)
+        container.mainContext.insert(fifthMatch)
         
         return container
     }

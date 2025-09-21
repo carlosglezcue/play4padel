@@ -10,27 +10,35 @@ import SwiftUI
 struct RegisterMatchView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
     
     @DeviceIdiom private var deviceIdiom
     
-    @Binding var userFirstSet: Int
-    @Binding var userSecondSet: Int
-    @Binding var userThirdSet: Int
-    @Binding var rivalFirstSet: Int
-    @Binding var rivalSecondSet: Int
-    @Binding var rivalThirdSet: Int
-    @Binding var dateInfo: Date
-    @Binding var courtTypeSelected: TypeCourt
-    @Binding var positionSelected: PlayerPositionType
-    
-    let saveAction: () -> ()
+    @Binding var viewModel: HomeViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
-            HeaderView(
-                section: "Add result:",
-                subsection: ""
-            )
+            HStack(alignment: .firstTextBaseline) {
+                HeaderView(
+                    section: "Add result:",
+                    subsection: ""
+                )
+                
+                Spacer()
+                
+                Button {
+                    dismiss()
+                    viewModel.restarMatchValue()
+                } label: {
+                    Image(systemName: "xmark.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 25)
+                        .foregroundColor(.onlyBlack)
+                }
+                .padding(.trailing)
+            }
+            .background(.principal)
             
             Spacer()
             
@@ -43,20 +51,20 @@ struct RegisterMatchView: View {
                 VStack(alignment: .leading, spacing: 15) {
                     
                     RegisterSetsSection(
-                        userSet: $userFirstSet,
-                        rivalSet: $rivalFirstSet,
+                        userSet: $viewModel.userFirstSet,
+                        rivalSet: $viewModel.rivalFirstSet,
                         title: "First Set:"
                     )
                     
                     RegisterSetsSection(
-                        userSet: $userSecondSet,
-                        rivalSet: $rivalSecondSet,
+                        userSet: $viewModel.userSecondSet,
+                        rivalSet: $viewModel.rivalSecondSet,
                         title: "Second Set:"
                     )
                     
                     RegisterSetsSection(
-                        userSet: $userThirdSet,
-                        rivalSet: $rivalThirdSet,
+                        userSet: $viewModel.userThirdSet,
+                        rivalSet: $viewModel.rivalThirdSet,
                         title: "Third Set:"
                     )
                     
@@ -66,12 +74,12 @@ struct RegisterMatchView: View {
                         Menu {
                             ForEach([PlayerPositionType.backhand, PlayerPositionType.drive, PlayerPositionType.both], id: \.self) { position in
                                 Button(position.rawValue) {
-                                    positionSelected = position
+                                    viewModel.positionSelected = position
                                 }
                             }
                         } label: {
-                            Text(positionSelected == .none ? "Select position" : positionSelected.toView())
-                                .foregroundStyle(positionSelected == .none ? .gray : .primary)
+                            Text(viewModel.positionSelected == .none ? "Select position" : viewModel.positionSelected.toView())
+                                .foregroundStyle(viewModel.positionSelected == .none ? .gray : .primary)
                         }
                     }
                     
@@ -81,19 +89,19 @@ struct RegisterMatchView: View {
                         Menu {
                             ForEach([TypeCourt.indoor, TypeCourt.outdoor], id: \.self) { type in
                                 Button(type.rawValue) {
-                                    courtTypeSelected = type
+                                    viewModel.courtTypeSelected = type
                                 }
                             }
                         } label: {
-                            Text(courtTypeSelected == .none ? "Select court" : courtTypeSelected.toView())
-                                .foregroundStyle(courtTypeSelected == .none ? .gray : .primary)
+                            Text(viewModel.courtTypeSelected == .none ? "Select court" : viewModel.courtTypeSelected.toView())
+                                .foregroundStyle(viewModel.courtTypeSelected == .none ? .gray : .primary)
                         }
                     }
                     
                     HStack(alignment: .firstTextBaseline) {
                         DatePicker(
                             "Date:",
-                            selection: $dateInfo,
+                            selection: $viewModel.dateInfo,
                             in: ...Date.now,
                             displayedComponents: .date
                         )
@@ -106,9 +114,7 @@ struct RegisterMatchView: View {
             
             HStack {
                 NormalButton(
-                    buttonAction: {
-                        saveAction()
-                    },
+                    buttonAction: { viewModel.saveMatchAction(context) },
                     title: "Save",
                     width: 100,
                     style: PrincipalButton()
@@ -117,7 +123,10 @@ struct RegisterMatchView: View {
                 Spacer()
                 
                 NormalButton(
-                    buttonAction: { dismiss() },
+                    buttonAction: {
+                        dismiss()
+                        viewModel.restarMatchValue()
+                    },
                     title: "Cancel",
                     width: 100,
                     style: CancelButton()
@@ -135,16 +144,6 @@ struct RegisterMatchView: View {
 }
 
 #Preview {
-    RegisterMatchView(
-        userFirstSet: .constant(.zero),
-        userSecondSet: .constant(.zero),
-        userThirdSet: .constant(.zero),
-        rivalFirstSet: .constant(.zero),
-        rivalSecondSet: .constant(.zero),
-        rivalThirdSet: .constant(.zero),
-        dateInfo: .constant(.now),
-        courtTypeSelected: .constant(.none),
-        positionSelected: .constant(.none),
-        saveAction: { }
+RegisterMatchView(viewModel: .constant(HomeViewModel())
     )
 }

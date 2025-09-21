@@ -63,6 +63,11 @@ class WorkoutManager: NSObject, ObservableObject, HKWorkoutSessionDelegate {
         }
     }
     
+    func resumeWorkout() {
+        guard let session = workoutSession else { return }
+        session.resume()
+    }
+    
     func pauseWorkout() {
         guard let session = workoutSession else { return }
         session.pause()

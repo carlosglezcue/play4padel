@@ -9,8 +9,8 @@ import SwiftUI
 
 struct RegisterSetsSection: View {
     
-    @Binding var userSet: Int
-    @Binding var rivalSet: Int
+    @Binding var userSet: String
+    @Binding var rivalSet: String
     let title: LocalizedStringKey
     
     @FocusState private var isFocused: Bool
@@ -22,14 +22,14 @@ struct RegisterSetsSection: View {
                 .foregroundStyle(.primary)
             
             Spacer()
-            TextField("", value: $userSet, format: .number)
+            TextField("", text: $userSet)
                 .font(.callout)
                 .foregroundStyle(.gray)
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 50)
                 .keyboardType(.numberPad)
             Text("-")
-            TextField("", value: $rivalSet, format: .number)
+            TextField("", text: $rivalSet)
                 .font(.callout)
                 .foregroundStyle(.gray)
                 .textFieldStyle(.roundedBorder)
@@ -41,8 +41,8 @@ struct RegisterSetsSection: View {
 
 #Preview {
     RegisterSetsSection(
-        userSet: .constant(.zero),
-        rivalSet: .constant(.zero),
+        userSet: .constant(""),
+        rivalSet: .constant(""),
         title: "First Set:"
     )
 }

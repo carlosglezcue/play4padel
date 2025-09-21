@@ -16,31 +16,6 @@ struct MatchDetailView: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .lastTextBaseline) {
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "chevron.backward.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 20)
-                        .foregroundStyle(.black)
-                        .shadow(color: .gray.opacity(0.5), radius: 5, y: 5)
-                }
-                
-                Spacer()
-                
-                Text("Matches Details")
-                    .font(.title2)
-                    .bold()
-                    .foregroundStyle(.onlyBlack)
-                    .padding(.top)
-                
-                Spacer()
-            }
-            .padding([.bottom, .horizontal])
-            .background(.principal)
-            
             ScrollView {
                 HStack(spacing: 2) {
                     Text("Date: ")
@@ -113,10 +88,9 @@ struct MatchDetailView: View {
             .scrollIndicators(.hidden)
             .scrollBounceBehavior(.basedOnSize)
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationTitle("Matches Details")
     }
 }
-
 
 #Preview {
     MatchDetailView(

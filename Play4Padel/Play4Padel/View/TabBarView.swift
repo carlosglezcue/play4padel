@@ -29,6 +29,8 @@ struct TabBarView: View {
                         Label("My Profile", systemImage: "person.circle")
                     }
             }
+            .tabViewStyle(.sidebarAdaptable)
+            .tabBarMinimizeBehavior(.onScrollDown)
             .tint(.tabBarTint)
             .navigationBarBackButtonHidden(true)
             .onAppear {
